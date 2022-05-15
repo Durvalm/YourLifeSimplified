@@ -1,12 +1,20 @@
 For the to do list app ==
 
-1 - Create the template to have every task fitted in
-2 - Figure out how to make the user input Hours and Dates (Maybe Search how to implement a calendar-based input for date)
-3 - Put a bar on the top of the to do list app for the user to select between (completed tasks, current tasks, archived tasks)
-4 - Filter every Task by (is_completed) so I know what goes in (completed tasks) or (current_tasks)
-5 -
-6 -
+1 - Implement Filter By (Completed/Current)
+6 - Page to check the task in full details (implement all elements from the database: creation date, description, etc)
 7 -
 8 -
 9 -
 10-
+
+
+
+
+
+
+
+
+
+
+
+

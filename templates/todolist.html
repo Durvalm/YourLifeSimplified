@@ -1,42 +1,90 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<div class="container"><h5>Tasks</h5>
+<header>
+<div class="container py-2">
 
-
-<div class="container border">
     <div class="row">
-        <div class="col">
-            Task1
-        </div>
-    </div>
+      <div class="col text-left"><a href="#"><h4 class="btn btn-secondary">Tasks</h4></a></div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">
+    Filter by
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="book-dropdown">
+    <li><button class="dropdown-item" type="button">Completed Tasks</button></li>
+    <li><button class="dropdown-item" type="button">Current Tasks</button></li>
+  </ul>
 </div>
 
-<div class="container border">
-    <div class="row">
-        <div class="col">
-            Task2
-        </div>
+      <div class="col text-right" data-toggle="modal" data-target="#AddModal"><h4 class="btn btn-primary">Add Task</h4></div>
     </div>
-</div>
+    </div>
 
-<div class="container border">
-    <div class="row">
-        <div class="col">
-            Task3
-        </div>
+  </header>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Status</th>
+      <th scope="col">Remove</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for task in tasks %}
+    <tr>
+      <td><h5>-</h5></td>
+      <td><h4>{{ task.title }}</h4></td>
+      <td><h4>{{ task.end_date }}</h4></td>
+      <td><a class="btn btn-success" href="">Completed</a></td>
+      <td><a class="btn btn-danger" href="{% url 'remove_task' task.id %}">Remove</a></td>
+      <td><a class="btn btn-secondary text-light" href="{% url 'edit_task' task.id %}">Edit</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+<!-- Modal add -->
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="AddModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{% url 'add_task' %}" method="POST">
+          {% csrf_token %}
+      <div class="modal-header">
+        <h5 class="modal-title" id="AddModalLabel">Add Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body">
+          <label>Title:</label>
+          <input class="form-control" name="title" type="text">
+          <label>Description:</label>
+          <input class="form-control" name="description" type="text">
+          <label>Deadline</label>
+          <input class="form-control" name="deadline" type="datetime-local">
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
     </div>
+  </div>
 </div>
-<div class="container border">
-    <div class="row">
-        <div class="col">
-            Task4
-        </div>
-    </div>
-</div>
-    </div>
 
 
 {% endblock %}
+
