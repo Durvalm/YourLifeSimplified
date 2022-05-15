@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import ToDoList
 from .forms import ToDoListForm
@@ -6,13 +7,17 @@ from .forms import ToDoListForm
 
 def todolist(request):
     # Get Objects from ToDoList model and order by deadline date so it displays in todolist.html
-    tasks = ToDoList.objects.filter(user=request.user).order_by('end_date')
+
+    if request.user.is_authenticated:
+        tasks = ToDoList.objects.filter(user=request.user).order_by('end_date')
+    else:
+        return redirect('login_required')
 
     context = {
         'tasks': tasks,
     }
 
-    return render(request, 'todolist.html', context)
+    return render(request, 'to_do_list/todolist.html', context)
 
 
 def add_task(request):
@@ -27,7 +32,7 @@ def add_task(request):
         task.save()
         return redirect('todolist')
 
-    return render(request, 'todolist.html')
+    return render(request, 'to_do_list/todolist.html')
 
 
 def remove_task(request, id):
@@ -54,6 +59,6 @@ def edit_task(request, id):
         'tasks': tasks,
     }
 
-    return render(request, 'todolist_edit.html', context)
+    return render(request, 'to_do_list/todolist_edit.html', context)
 
 
