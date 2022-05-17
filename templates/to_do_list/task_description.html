@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col">
+            <h2>{{ task.title }}</h2>
+        </div>
+        <div class="col">
+            <h3 class="text-right px-5 py-1">Deadline:</h3>
+            <h4 class="text-right">{{ task.end_date }}</h4>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+<label><h3>Description:</h3></label>
+<textarea class="form-control" rows="10" cols="10">{{ task.description }}</textarea>
+
+<div class="py-4">
+<h3>Created at:</h3>
+<h5>{{task.created_at}}</h5>
+    </div>
+    <a class="text-right" href="{% url 'todolist' %}">Back</a>
+</div>
+
+{% endblock %}

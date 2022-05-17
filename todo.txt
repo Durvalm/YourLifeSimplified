@@ -2,9 +2,9 @@ For the to do list app ==
 
 1 - Implement Filter By (Completed/Current)
 6 - Page to check the task in full details (implement all elements from the database: creation date, description, etc)
-7 -
-8 -
-9 -
+7 - Implement daytime function to fail tasks if deadline has passed
+8 - Implement session for Guest users
+9 - Implement paginator for to-do-list data
 10-
 
 

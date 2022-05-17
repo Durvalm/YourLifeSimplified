@@ -13,8 +13,9 @@
     Filter by
   </button>
   <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-    <li><button class="dropdown-item" type="button">Completed Tasks</button></li>
-    <li><button class="dropdown-item" type="button">Current Tasks</button></li>
+    <li><a href="{% url 'todolist' %}" class="dropdown-item" type="button">All Tasks</a></li>
+    <li><a href="{% url 'completed_tasks' %}" class="dropdown-item" type="button">Completed Tasks</a></li>
+    <li><a href="{% url 'current_tasks' %}" class="dropdown-item" type="button">Current Tasks</a></li>
   </ul>
 </div>
 
@@ -33,15 +34,20 @@
       <th scope="col">Status</th>
       <th scope="col">Remove</th>
       <th scope="col">Edit</th>
+
     </tr>
   </thead>
   <tbody>
   {% for task in tasks %}
     <tr>
       <td><h5>-</h5></td>
-      <td><h4>{{ task.title }}</h4></td>
+      <td><a href="{% url 'task_description' task.id %}"><h4 class="text-dark">{{ task.title }}</h4></a></td>
       <td><h4>{{ task.end_date }}</h4></td>
-      <td><a class="btn btn-success" href="">Completed</a></td>
+      {% if task.is_completed == True %}
+      <td><a class="btn btn-success" href="{% url 'change_status' task.id %}">Completed</a></td>
+      {% else %}
+      <td><a class="btn btn-warning" href="{% url 'change_status' task.id %}">Current</a></td>
+      {% endif %}
       <td><a class="btn btn-danger" href="{% url 'remove_task' task.id %}">Remove</a></td>
       <td><a class="btn btn-secondary text-light" href="{% url 'edit_task' task.id %}">Edit</a></td>
     </tr>
