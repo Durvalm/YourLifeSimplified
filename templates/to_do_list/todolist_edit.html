@@ -15,7 +15,7 @@
           <label>Title:</label>
           <input class="form-control" name="title" type="text" value="{{tasks.title}}">
           <label>Description:</label>
-          <input class="form-control" name="description" type="text" value="{{tasks.description}}">
+      <textarea class="form-control" name="description" cols="10" rows="10">{{tasks.description}}</textarea>
           <label>Deadline</label>
           <input class="form-control" name="deadline" type="datetime-local"><br>
           <button class="btn btn-primary" type="submit">Submit</button>
