@@ -1,7 +1,5 @@
 For the to do list app ==
 
-7 - Implement daytime function to fail tasks if deadline has passed
-9 - Implement paginator for to-do-list data
 10-
 
 

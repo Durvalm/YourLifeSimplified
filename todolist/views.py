@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import ToDoList
 from .forms import ToDoListForm
+from django.core.paginator import Paginator
+from django.utils import timezone
 # Create your views here.
 
 
@@ -15,8 +17,18 @@ def todolist(request):
             request.session.create()
         tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key).order_by('end_date')
 
+    paginator = Paginator(tasks, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    for task in tasks:
+        if not task.is_completed:
+            if task.end_date < timezone.now():
+                task.is_late = True
+                task.save()
+
     context = {
-        'tasks': tasks,
+        'tasks': page_obj,
     }
 
     return render(request, 'to_do_list/todolist.html', context)
@@ -28,10 +40,14 @@ def current_tasks(request):
         tasks = ToDoList.objects.filter(user=request.user, is_completed=False).order_by('end_date')
     else:
         tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key, is_completed=False) .order_by('end_date')
-    context = {
-        'tasks': tasks,
-    }
 
+    paginator = Paginator(tasks, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'tasks': page_obj,
+    }
     return render(request, 'to_do_list/todolist.html', context)
 
 
@@ -42,8 +58,12 @@ def completed_tasks(request):
     else:
         tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key, is_completed=True).order_by('end_date')
 
+    paginator = Paginator(tasks, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'tasks': tasks,
+        'tasks': page_obj,
     }
 
     return render(request, 'to_do_list/todolist.html', context)
@@ -121,12 +141,15 @@ def change_status(request, id):
 
     if tasks.is_completed:
         tasks.is_completed = False
+        tasks.is_late = False
         tasks.save()
         return redirect('todolist')
     else:
         tasks.is_completed = True
+        tasks.is_late = False
         tasks.save()
         return redirect('todolist')
+
 
 def task_description(request, id):
     """Renders all information of the task on the screen"""
