@@ -51,6 +51,3 @@ def logout(request):
     messages.success(request, 'You are logged out.')
     return redirect('login')
 
-
-def login_required(request):
-    return render(request, 'accounts/login_required.html')

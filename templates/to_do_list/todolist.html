@@ -48,7 +48,7 @@
       {% else %}
       <td><a class="btn btn-warning" href="{% url 'change_status' task.id %}">Current</a></td>
       {% endif %}
-      <td><a class="btn btn-danger" href="{% url 'remove_task' task.id %}">Remove</a></td>
+      <td><a class="btn btn-danger" href="{% url 'remove_task' task.id %}" onclick="return confirm('Are you sure you want to delete this task?')">Remove</a></td>
       <td><a class="btn btn-secondary text-light" href="{% url 'edit_task' task.id %}">Edit</a></td>
     </tr>
   {% endfor %}

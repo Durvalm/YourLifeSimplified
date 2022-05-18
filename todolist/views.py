@@ -11,7 +11,9 @@ def todolist(request):
     if request.user.is_authenticated:
         tasks = ToDoList.objects.filter(user=request.user).order_by('end_date')
     else:
-        return redirect('login_required')
+        if not request.session.session_key:
+            request.session.create()
+        tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key).order_by('end_date')
 
     context = {
         'tasks': tasks,
@@ -25,8 +27,7 @@ def current_tasks(request):
     if request.user.is_authenticated:
         tasks = ToDoList.objects.filter(user=request.user, is_completed=False).order_by('end_date')
     else:
-        return redirect('login_required')
-
+        tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key, is_completed=False) .order_by('end_date')
     context = {
         'tasks': tasks,
     }
@@ -39,7 +40,7 @@ def completed_tasks(request):
     if request.user.is_authenticated:
         tasks = ToDoList.objects.filter(user=request.user, is_completed=True).order_by('end_date')
     else:
-        return redirect('login_required')
+        tasks = ToDoList.objects.filter(user=None, session_key=request.session.session_key, is_completed=True).order_by('end_date')
 
     context = {
         'tasks': tasks,
@@ -56,8 +57,14 @@ def add_task(request):
         description = request.POST['description']
         end_date = request.POST['deadline']
 
-        task = ToDoList.objects.create(user=request.user, title=title, description=description, end_date=end_date)
-        task.save()
+        if request.user.is_authenticated:
+            task = ToDoList.objects.create(user=request.user, title=title, description=description, end_date=end_date)
+            task.save()
+        else:
+            if not request.session.session_key:
+                request.session.create()
+            task = ToDoList.objects.create(user=None, title=title, description=description, end_date=end_date, session_key=request.session.session_key)
+            task.save()
         return redirect('todolist')
 
     return render(request, 'to_do_list/todolist.html')
@@ -65,21 +72,36 @@ def add_task(request):
 
 def remove_task(request, id):
     """This function removes tasks from the To-Do-List"""
-    tasks = ToDoList.objects.get(user=request.user, id=id)
-    tasks.delete()
+    if request.user.is_authenticated:
+        tasks = ToDoList.objects.get(user=request.user, id=id)
+        tasks.delete()
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        tasks = ToDoList.objects.get(user=None, id=id, session_key=request.session.session_key)
+        tasks.delete()
+
     return redirect('todolist')
 
 
 def edit_task(request, id):
     """This function redirects the user to another page so he can edit info"""
-    tasks = ToDoList.objects.get(user=request.user, id=id)
+    if request.user.is_authenticated:
+        tasks = ToDoList.objects.get(user=request.user, id=id)
+    else:
+        tasks = ToDoList.objects.get(user=None, id=id, session_key=request.session.session_key)
 
     if request.method == 'POST':
         title = request.POST['title']
         description = request.POST['description']
         end_date = request.POST['deadline']
 
-        ToDoList.objects.filter(id=id).update(user=request.user, title=title, description=description, end_date=end_date)
+        if request.user.is_authenticated:
+            ToDoList.objects.filter(id=id).update(user=request.user, title=title, description=description, end_date=end_date)
+        else:
+            if not request.session.session_key:
+                request.session.create()
+            ToDoList.objects.filter(id=id).update(user=None, title=title, description=description, end_date=end_date, session_key=request.session.session_key)
 
         return redirect('todolist')
 
@@ -92,7 +114,10 @@ def edit_task(request, id):
 
 def change_status(request, id):
     """Changes Task status when user clicks on "current" or "completed" """
-    tasks = ToDoList.objects.get(user=request.user, id=id)
+    if request.user.is_authenticated:
+        tasks = ToDoList.objects.get(user=request.user, id=id)
+    else:
+        tasks = ToDoList.objects.get(user=None, id=id, session_key=request.session.session_key)
 
     if tasks.is_completed:
         tasks.is_completed = False
@@ -105,7 +130,11 @@ def change_status(request, id):
 
 def task_description(request, id):
     """Renders all information of the task on the screen"""
-    task = ToDoList.objects.get(user=request.user, id=id)
+    if request.user.is_authenticated:
+        task = ToDoList.objects.get(user=request.user, id=id)
+    else:
+        task = ToDoList.objects.get(user=None, id=id, session_key=request.session.session_key)
+
     context = {
         'task': task,
     }

@@ -5,7 +5,7 @@
 <div class="jumbotron">
     <div class="row">
         <div class="col">
-            <h2>{{ task.title }}</h2>
+            <h3>{{ task.title }}</h3>
         </div>
         <div class="col">
             <h3 class="text-right px-5 py-1">Deadline:</h3>
@@ -19,10 +19,19 @@
 <label><h3>Description:</h3></label>
 <textarea class="form-control" rows="10" cols="10">{{ task.description }}</textarea>
 
-<div class="py-4">
-<h3>Created at:</h3>
+    <div class="row">
+    <div class="col">
+    <h3>Created at:</h3>
+        </div>
+        <div class="col text-right py-2">
+        {% if task.is_completed  %}
+        <h5 class="btn btn-success">Completed</h5>
+        {% else %}
+        <h5 class="btn btn-warning">Current</h5>
+        {% endif %}
+            </div>
+        </div>
 <h5>{{task.created_at}}</h5>
-    </div>
     <a class="text-right" href="{% url 'todolist' %}">Back</a>
 </div>
 
