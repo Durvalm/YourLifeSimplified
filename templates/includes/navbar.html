@@ -19,7 +19,7 @@
 
       <div class="widget-header">
           {% if user.is_authenticated %}
-          <small class="title text-light">Welcome {{user.username}}!</small>
+          <small class="title text-light">Welcome {{user.first_name}} {{user.last_name}}!</small>
           {% else %}
           <small class="title text-light">Welcome Guest!</small>
           {% endif %}
