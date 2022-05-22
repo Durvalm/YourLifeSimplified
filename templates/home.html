@@ -20,19 +20,43 @@
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4">
-            <h2>Your Next Task</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <h2>Your Next Task:</h2>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  {% if links %}
+                  <h5 class="card-title">{{ links.title }}</h5>
+                <p class="card-text">{{ links.description|truncatewords:30}}</p>
+                  <h5 class="card-text">{{ links.end_date }}</h5>
+                  {% else %}
+                  <h5 class="card-title">Title:</h5>
+                <p class="card-text">You currently don't have any upcoming tasks.</p>
+                  <h5 class="card-text">Click below to add your first task.</h5>
+                  {% endif %}
             <p><a class="btn btn-primary" href="{% url 'todolist' %}" role="button">To-Do-List &raquo;</a></p>
+              </div>
+            </div>
           </div>
+
           <div class="col-md-4">
             <h2>Your Current Goals</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">Goals &raquo;</a></p>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p><a class="btn btn-primary" href="{% url 'goals' %}" role="button">To-Do-List &raquo;</a></p>
+              </div>
+            </div>
           </div>
+
           <div class="col-md-4">
-            <h2>Idk yet what goes here</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-primary" href="#" role="button">Incognito &raquo;</a></p>
+            <h2>Idk yet </h2>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p><a class="btn btn-primary" href="{% url 'todolist' %}" role="button">To-Do-List &raquo;</a></p>
+              </div>
+            </div>
           </div>
         </div>
 
