@@ -12,20 +12,19 @@
           <p>This software was built for you to securely store all the important things in your life, such as
           the next tasks you need to accomplish, the next goals of your life, and any other notes regarding anything
               important, like studying notes, things to keep in mind, meetings, etc.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
         </div>
       </div>
 
       <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-4">
+          <div class="col">
             <h2>Your Next Task:</h2>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 24rem;">
               <div class="card-body">
                   {% if links %}
                   <h5 class="card-title">{{ links.title }}</h5>
-                <p class="card-text">{{ links.description|truncatewords:30}}</p>
+                <p class="card-text">{{ links.description|truncatewords:20}}</p>
                   <h5 class="card-text">{{ links.end_date }}</h5>
                   {% else %}
                   <h5 class="card-title">Title:</h5>
@@ -37,30 +36,24 @@
             </div>
           </div>
 
-          <div class="col-md-4">
-            <h2>Your Current Goals</h2>
-            <div class="card" style="width: 18rem;">
+          <div class="col">
+            <h2>Your Next Goal:</h2>
+            <div class="card" style="width: 24rem;">
               <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p><a class="btn btn-primary" href="{% url 'goals' %}" role="button">To-Do-List &raquo;</a></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <h2>Idk yet </h2>
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p><a class="btn btn-primary" href="{% url 'todolist' %}" role="button">To-Do-List &raquo;</a></p>
+                  {% if goals %}
+                      <h5 class="card-title">{{ goals.title }}</h5>
+                      <p class="card-text">{{ goals.description|truncatewords:20 }}</p>
+                      <h5 class="card-text">{{ goals.end_date }}</h5>
+                  {% else %}
+                      <h5 class="card-title">Title:</h5>
+                       <p class="card-text">You currently don't have any upcoming goals.</p>
+                      <h5 class="card-text">Click below to add your first goal.</h5>
+                  {% endif %}
+            <p><a class="btn btn-primary" href="{% url 'goals' %}" role="button">Goals &raquo;</a></p>
               </div>
             </div>
           </div>
         </div>
-
-        <hr>
 
       </div> <!-- /container -->
 

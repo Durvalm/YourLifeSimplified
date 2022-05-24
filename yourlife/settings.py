@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'todolist.context_processors.menu_links',
+                'goals.context_processors.menu_goals',
             ],
         },
     },

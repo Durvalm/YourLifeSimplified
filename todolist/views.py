@@ -106,6 +106,7 @@ def add_task(request):
                 request.session.create()
             task = ToDoList.objects.create(user=None, title=title, description=description, end_date=end_date, session_key=request.session.session_key)
             task.save()
+            messages.success(request, 'Success! Make sure to log in your account so your tasks are saved.')
         return redirect('todolist')
 
     return render(request, 'to_do_list/todolist.html')
@@ -144,11 +145,6 @@ def edit_task(request, id):
         title = request.POST['title']
         description = request.POST['description']
         end_date = request.POST['deadline']
-
-        # Handle error if title was previously inputted
-        if ToDoList.objects.filter(title=title).exists():
-            messages.error(request, 'You must input a different title')
-            return redirect('todolist')
 
         # Update task if user is authenticated
         if request.user.is_authenticated:

@@ -1,4 +1,5 @@
 from .models import ToDoList
+from goals.models import Goal
 
 def menu_links(request):
     if request.user.is_authenticated:
