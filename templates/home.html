@@ -8,7 +8,11 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
+            {% if user.is_authenticated %}
           <h1 class="display-3">Hello, {{ user.first_name }} {{ user.last_name }}!</h1>
+            {% else %}
+            <h1 class="display-3">Hello, Guest!</h1>
+            {% endif %}
           <p>This software was built for you to securely store all the important things in your life, such as
           the next tasks you need to accomplish, the next goals of your life, and any other notes regarding anything
               important, like studying notes, things to keep in mind, meetings, etc.</p>

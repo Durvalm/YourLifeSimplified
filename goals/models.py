@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 
@@ -12,7 +13,7 @@ class Goal(models.Model):
     session_key = models.CharField(max_length=100, blank=True)
 
     def time_left(self):
-        time_left = self.end_date - self.created_at
+        time_left = self.end_date - timezone.now()
         days_left = time_left.days
         return days_left
 
