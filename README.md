@@ -8,6 +8,7 @@ This software allows users to keep track of their goals and tasks, so they can a
 You can always change the status from current to completed, if the given deadline is over, the program will set the status to "Missing" automatically. Click on the task's title to view all the information of the task, including the description.
 
 <img width="1440" alt="Screen Shot 2022-06-07 at 2 06 13 PM" src="https://user-images.githubusercontent.com/89949017/172670398-7bfa43e6-5fee-4ffa-a0a4-aedd31e257ab.png">
+
 ## Set up:
 
 #### Clone the project:
