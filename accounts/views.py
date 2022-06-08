@@ -62,3 +62,29 @@ def logout(request):
     messages.success(request, 'You are logged out.')
     return redirect('login')
 
+def profile(request, id):
+    """Allows user to see its own information, and to change password"""
+    id = request.user.id
+
+    context = {
+        'id': id,
+    }
+
+    return render(request, 'accounts/profile.html', context)
+
+def edit_profile(request):
+    # get user
+    user = request.user
+
+    if request.method == 'POST':
+        password = request.POST['password']
+        password1 = request.POST['password1']
+
+        if password == password1:
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Password was successfully changed, please log in again.')
+            return redirect('home')
+
+
+    return render(request, 'accounts/profile.html', context)
