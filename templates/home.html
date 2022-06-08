@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<main role="main">
+        {% include 'includes/alerts.html' %}
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+            {% if user.is_authenticated %}
+          <h1 class="display-3">Hello, {{ user.first_name }} {{ user.last_name }}!</h1>
+            {% else %}
+            <h1 class="display-3">Hello, Guest!</h1>
+            {% endif %}
+          <p>This software was built for you to securely store all the important things in your life, such as
+          the next tasks you need to accomplish, the next goals of your life, and any other notes regarding anything
+              important, like studying notes, things to keep in mind, meetings, etc.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col">
+            <h2>Your Next Task:</h2>
+            <div class="card" style="width: 24rem;">
+              <div class="card-body">
+                  {% if links %}
+                  <h5 class="card-title">{{ links.title }}</h5>
+                <p class="card-text">{{ links.description|truncatewords:20}}</p>
+                  <h5 class="card-text">{{ links.end_date }}</h5>
+                  {% else %}
+                  <h5 class="card-title">Title:</h5>
+                <p class="card-text">You currently don't have any upcoming tasks.</p>
+                  <h5 class="card-text">Click below to add your first task.</h5>
+                  {% endif %}
+            <p><a class="btn btn-primary" href="{% url 'todolist' %}" role="button">To-Do-List &raquo;</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <h2>Your Next Goal:</h2>
+            <div class="card" style="width: 24rem;">
+              <div class="card-body">
+                  {% if goals %}
+                      <h5 class="card-title">{{ goals.title }}</h5>
+                      <p class="card-text">{{ goals.description|truncatewords:20 }}</p>
+                      <h5 class="card-text">{{ goals.end_date }}</h5>
+                  {% else %}
+                      <h5 class="card-title">Title:</h5>
+                       <p class="card-text">You currently don't have any upcoming goals.</p>
+                      <h5 class="card-text">Click below to add your first goal.</h5>
+                  {% endif %}
+            <p><a class="btn btn-primary" href="{% url 'goals' %}" role="button">Goals &raquo;</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /container -->
+
+    </main>
+
+{% endblock %}

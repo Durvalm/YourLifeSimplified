@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container py-3">
+      <div class="jumbotron">
+            <a href="{% url 'todolist' %}" class="close"><span aria-hidden="true">&times;</span>
+            </a>
+            <h3>Edit Form</h3>
+
+      </div>
+<form method="POST" action="">
+    {% csrf_token %}
+          <label>Title:</label>
+          <input class="form-control" name="title" type="text" value="{{tasks.title}}">
+          <label>Description:</label>
+      <textarea class="form-control" name="description" cols="10" rows="10">{{tasks.description}}</textarea>
+          <label>Deadline</label>
+          <input class="form-control" name="deadline" type="datetime-local"><br>
+          <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</div>
+
+{% endblock %}
